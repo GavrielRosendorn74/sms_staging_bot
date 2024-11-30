@@ -1,7 +1,7 @@
-import type { defineConfig } from 'drizzle-kit';
+import { neon } from '@neondatabase/serverless';
 import { config } from 'dotenv';
 
-config({ path: './.dev.vars' })
+config({ path: './.env' })
 
 export default {
   schema: './src/db/schema.ts',

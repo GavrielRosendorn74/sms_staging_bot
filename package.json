@@ -5,16 +5,17 @@
     "deploy": "wrangler deploy --minify src/index.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "tsx seed.ts",
     "db:setup": "npm run db:generate && npm run db:migrate && npm run db:seed",
     "fiberplane": "npx @fiberplane/studio@latest"
   },
   "dependencies": {
     "@fiberplane/hono-otel": "^0.3.1",
+    "@hono/zod-validator": "^0.4.1",
     "@neondatabase/serverless": "^0.10.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.35.3",
-    "hono": "^4.6.7"
+    "hono": "^4.6.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241022.0",

@@ -1,16 +1,16 @@
 import { Hono } from 'hono'
 import { instrument } from '@fiberplane/hono-otel';
+import telegramApp from './telegram/controller';
+import projectApp from './projects/controller';
 
-type Bindings = {
+export type Env = {
   DATABASE_URL: string;
+  TELEGRAM_API_SECRET_URL: string;
 }
 
-const app = new Hono<{ Bindings: Bindings }>()
+const app = new Hono<{Bindings: Env}>()
 
-app.get('/', (c) => {
-  const { shouldHonk } = c.req.query();
-  const honk = typeof shouldHonk !== "undefined" ? 'Honk honk!' : '';
-  return c.text(`Helloo !!`.trim())
-})
+app.route('/telegram', telegramApp);
+app.route('/projects', projectApp);
 
 export default instrument(app)

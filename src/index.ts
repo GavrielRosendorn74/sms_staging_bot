@@ -10,11 +10,10 @@ export type Env = {
 
 const app = new Hono<{Bindings: Env}>()
 
-app.use('*', (c, next) => {
-  c.header('Access-Control-Allow-Origin', '*');
-  c.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  c.header('Access-Control-Allow-Headers', 'Content-Type');
-  return next();
+app.use('*', async (c, next) => {
+  const headers = c.req.raw.headers;
+  console.log('Headers:', Object.fromEntries(headers));
+  return next();  // Continue avec la requête
 });
 
 app.route('/telegram', telegramApp);

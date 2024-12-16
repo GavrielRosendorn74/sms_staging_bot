@@ -1,152 +1,68 @@
+## Honcathon !
 
-![HONC-Git](https://github.com/user-attachments/assets/669c0de6-d7e8-45db-a858-585f895e7d29)
+Here is my participation to : the November Honcathon! 🧑‍💻
 
-# Goose Quotes API
+## Description
 
-Harnessing the power of AI to imagine the world in a goosier way.
+For this Hackathon i created a telegram bot made to replace in the most easy way sms api in dev and staging. And also be able to register as many as mobile numbers as requierd to make tests.
 
-This CRUD API provides a collection of inspirational quotes from the wise and charismatic Goose.
+My goal was that in one single command this bot will reply with a curl POST request that the user can immediately use to send to himself all the sms traffic of his project in staging and dev.
 
-It is powered by the [HONC stack](https://honc.dev), consisting of [Hono](https://hono.dev/) for the API, [Neon](https://neon.tech/) for the database, and [Drizzle](https://orm.drizzle.team/) for the ORM. It runs on [CloudFlare Workers](https://developers.cloudflare.com/workers/).
+## Quickstart
 
-The repo is also a good example of how to use [FPX](https://github.com/fiberplane/fpx/) to build, test and debug a Hono API.
+To test this project you need to run it locally.
+Because creating a bot on telegram is long and boring i will send you all my keys that i will destroy some days after the end of hackaton.
 
-## Requirements:
+### 1 : Make sure you have the dependencies
 
-Besides the requirements specified in the `package.json` you will need a Postgres database. 
+- npm : 10.8.2
+- node : v20.17.0
+- ngrok : 3.18.4
 
-### Setup
-To run this project you need to provide a `DATABASE_URL` and an `OPENAI_API_KEY`. The easiest way is to provide both in a `dev.vars` file at the root of the project. A `dev.vars.example` file is included in the project to serve as a template 
+### 2 : Env variables
 
-#### 1. Database
-Set the `DATABASE_URL` in the `dev.vars`. The `drizzle.config.ts` file will use this URL to migrate the tables to your database. The Cloudflare worker will also need access to this variable to interact with the database.
+DATABASE_URL=your neon postgres
+FPX_ENDPOINT=http://localhost:8788/v1/traces
+TELEGRAM_API_SECRET_URL=your telgram api secret url (in this format https://api.telegram.org/bot[credentials])
 
-We recommend using [Neon](https://neon.tech/) for a Postgres database, but any other Postgres database should do the trick, as well as running one locally.
+* To test the project i will send whith the link of the project all the .env file so you'll just have to copy paste.
 
-### 2. OpenAi API
+### 3 : Launch your project
 
-For the generation of quotes and biographies for the geese, you will need an OpenAI API key. You can create one [here](https://platform.openai.com/api-keys).
+- 1 : Launch local
 
-You can set the OpenAI API key in the `.dev.vars` file or in the `.env` file or within your `wrangler.toml` file.
-
-
-## Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/fiberplane/goose-quotes-api.git
+```
+npm run dev 
 ```
 
-2. Navigate to the project directory:
+You should have [wrangler:inf] Ready on http://localhost:PORT
 
-```bash
-cd goose-quotes-api
+- 2 : Link ngrok
+
+```
+ngrok http PORT
 ```
 
-3. Install dependencies:
+You should see :
 
-```bash
-yarn install
+Forwarding NGROK_LINK -> http://localhost:PORT
+
+- 3 : Connect telegram to your webhook
+
+Make this request with no body.
+
+```
+POST
+
+https://api.telegram.org/bot[credentials]/setWebhook?url=[NGROK_LINK]/telegram/webhook_handler
 ```
 
-4. Setting up the database:
+- 4 : Text your bot.
 
-```bash
-yarn run db:setup
-```
+For our example text @FreeStagingSmsBot
 
-which is the same as running:
+/help and let yourself being guided
 
-```bash
-yarn run db:generate
-yarn run db:migrate
-yarn run db:seed
-```
+## Authors
 
-5. Start the development server:
-
-```bash
-yarn dev
-```
-
-The API will be running at `http://localhost:8787` and spin up a local CloudFlare Worker.
-
-
-## Running FPX Studio to debug your API
-
-In order to debug your API, you can use FPX Studio and the Hono Otel Client Library.
-
-The client library is already installed and configured in the project. All you need to do is run the following command to start FPX Studio:
-
-```bash
-yarn run fiberplane
-```
-
-Then restart your API, and inspect your routes and generate requests at `http://localhost:8788`.
-
-## Deploy the Goose Quotes API
-
-```bash
-yarn run deploy
-```
-
-You will need a CloudFlare account to deploy the API. You can create one [here](https://dash.cloudflare.com/sign-up/free-trial?utm_source=honc.dev).
-
-## Endpoints
-
-### GET /
-
-Description: Home page. If the shouldHonk query parameter is present, it responds with “Honk honk!”.
-
-### GET /api/geese
-
-Description: Retrieves all geese. If the name query parameter is defined, it returns geese whose names match the search term.
-
-### POST /api/geese
-
-Description: Creates a new goose. Requires name, and optionally isFlockLeader, programmingLanguage, motivations, and location in the request body.
-
-### POST /api/geese/:id/generate
-
-Description: Generates goose quotes influenced by the specified goose.
-
-### GET /api/geese/flock-leaders
-
-Description: Retrieves all geese that are flock leaders.
-
-### GET /api/geese/:id
-
-Description: Retrieves a goose by its ID.
-
-### POST /api/geese/:id/bio
-
-Description: Generates a bio for the specified goose and updates it.
-
-### POST /api/geese/:id/honk
-
-Description: Sends a honk message to the specified goose by its ID.
-
-### PATCH /api/geese/:id
-
-Description: Updates the name of the specified goose by its ID.
-
-### GET /api/geese/language/:language
-
-Description: Retrieves geese by programming language.
-
-### PATCH /api/geese/:id/motivations
-
-Description: Updates the motivations of the specified goose by its ID.
-
-### GET /ws
-
-Description: WebSocket endpoint for handling various real-time events related to geese, such as retrieving geese and creating a new goose.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+Gavriel Rosendorn

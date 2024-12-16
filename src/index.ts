@@ -10,12 +10,6 @@ export type Env = {
 
 const app = new Hono<{Bindings: Env}>()
 
-app.use('*', async (c, next) => {
-  const headers = c.req.raw.headers;
-  console.log('Headers:', Object.fromEntries(headers));
-  return next();  // Continue avec la requête
-});
-
 app.route('/telegram', telegramApp);
 app.route('/projects', projectApp);
 
